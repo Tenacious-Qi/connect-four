@@ -89,20 +89,63 @@ describe Board do
         column = 2
         symbol = 'X'
         board.drop_checker(column, symbol)
-        expect(board.cells.last[column]).to eq(symbol)
+        expect(board.instance_variable_get(:@cells)).to eq(
+
+          [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil]]
+        )
       end
     end
     context 'when a column is partially filled' do
       it 'marks the last available spot' do
-        column = 2
-        last_spot_symbol = 'X'
-        board.drop_checker(column, last_spot_symbol)
-        expect(board.cells[-1][column]).to eq(last_spot_symbol)
+        board.instance_variable_set(:@cells,
 
+          [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil]]
+        )
+
+        column = 2
         symbol_above = 'O'
         board.drop_checker(column, symbol_above)
-        expect(board.cells[-2][column]).to eq(symbol_above)
+        expect(board.instance_variable_get(:@cells)).to eq(
+
+         [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil]]
+
+        )
       end 
+    end
+  end
+
+  describe '#vertical_four?' do
+    context 'when there are four consecutive symbols of the same kind in a column' do
+      before do
+        board.instance_variable_set(:@cells, 
+          
+          [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil]]
+
+        )
+      end
+      it 'returns true' do
+        expect(board.vertical_four?('X')).to be true
+      end
     end
   end
 end

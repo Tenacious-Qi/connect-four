@@ -1,6 +1,6 @@
 class Board
-  attr_reader :cells
 
+  
   def initialize
     @cells = Array.new(6) { Array.new(7) }
   end
@@ -22,5 +22,9 @@ class Board
     next_avail_index = -1
     next_avail_index -= 1 while @cells[next_avail_index][column]
     @cells[next_avail_index][column] = symbol
+  end
+
+  def vertical_four?(symbol)
+    @cells[2][2] == symbol && @cells[3][2] == symbol && @cells[4][2] == symbol && @cells[5][2] == symbol
   end
 end
