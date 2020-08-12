@@ -38,9 +38,24 @@ class Board
   # helper method for #vertical_four?
   def get_column_members(column)
     column_members = []
-    0.upto(5) { |n| column_members << @cells[n][column] }
+    0.upto(5) { |r| column_members << @cells[r][column] }
     column_members
   end
 
-  
+  def horizontal_four?(row, symbol, consec_count = 0)
+    get_row_with_four(row, symbol).each do |member|
+      member == symbol ? consec_count += 1 : consec_count = 0
+      return true if consec_count == 4
+    end
+    false
+  end
+
+  # helper method for #horizontal_four?
+  def get_row_with_four(row, symbol)
+    row_with_four = []
+    @cells.each do |r|
+      row_with_four << r if r.count(symbol) == 4
+    end
+    row_with_four.flatten
+  end
 end

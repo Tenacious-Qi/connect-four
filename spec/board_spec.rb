@@ -170,6 +170,46 @@ describe Board do
       end
     end
   end
+
+  describe '#horizontal_four' do
+    context 'when there are 4 consecutive symbols of the same kind in a row' do
+      before do
+        board.instance_variable_set(:@cells,
+          [[nil, nil,'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, 'O', 'O', 'O', 'O', nil, nil],
+          [nil, nil, 'X', 'X', nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil]]
+        )
+      end
+      it 'returns true' do
+        expect(board.horizontal_four?(2, 'O')).to be true
+      end
+    end
+
+    context 'when there are 4 non-consecutive symbols of the same kind in a row' do
+      before do
+        board.instance_variable_set(:@cells,
+          [[nil, nil,'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, 'O', 'O', 'O', 'X', 'O', nil],
+          [nil, nil, 'X', 'X', nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil]]
+        )
+      end
+      it 'returns false' do
+        expect(board.horizontal_four?(2, 'O')).to be false
+      end
+    end
+
+    context 'when board is empty' do
+      it 'returns false' do
+        expect(board.horizontal_four?(2, 'O')).to be false
+      end
+    end
+  end
 end
 
 
