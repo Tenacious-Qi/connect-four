@@ -135,16 +135,38 @@ describe Board do
         board.instance_variable_set(:@cells, 
           
           [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
+          [nil, 'O', 'X', nil, nil, nil, nil],
+          [nil, 'O', 'X', nil, nil, nil, nil],
+          [nil, 'O', 'X', 'O', nil, nil, nil],
           [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil]]
+          [nil, nil, 'O', nil, nil, nil, nil]]
 
         )
       end
       it 'returns true' do
-        expect(board.vertical_four?('X')).to be true
+        expect(board.vertical_four?(2, 'X')).to be true
+      end
+    end
+    
+    context 'when there are four non-consecutive symbols of the same kind in a column' do
+      before do
+        board.instance_variable_set(:@cells,
+          [[nil, nil,'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, 'O', 'O', 'O', nil, nil, nil],
+          [nil, nil, 'X', 'X', nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'O', nil, nil, nil, nil]]
+        )
+      end
+      it 'returns false' do
+        expect(board.vertical_four?(2, 'X')).to be false
+      end
+    end
+
+    context 'when board is empty' do
+      it 'returns false' do
+        expect(board.vertical_four?(2, 'X')).to be false
       end
     end
   end
