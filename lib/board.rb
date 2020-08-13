@@ -23,7 +23,9 @@ class Board
   # helper method for #drop_checker
   def find_next_avail(column, symbol)
     next_avail_index = -1
-    next_avail_index -= 1 while @cells[next_avail_index][column]
+    while @cells[next_avail_index][column] && next_avail_index > -6
+      next_avail_index -= 1
+    end
     @cells[next_avail_index][column] = symbol
   end
 
@@ -57,5 +59,30 @@ class Board
       row_with_four << r if r.count(symbol) == 4
     end
     row_with_four.flatten
+  end
+
+  def diagonal_four?(s)
+    r = 0
+    until r > 5
+      c = 0
+      until c > 6
+        # top left
+        if r.between?(0, 2) && c.between?(0, 3)
+          return true if @cells[r][c] == s && @cells[r + 1][c + 1] == s && @cells[r + 2][c + 2] == s && @cells[r + 3][c + 3] == s
+        # top right
+        elsif r.between?(0, 2) && c.between?(3, 6)
+          return true if @cells[r][c] == s && @cells[r + 1][c - 1] == s && @cells[r + 2][c - 2] == s && @cells[r + 3][c - 3] == s
+        # bottom left
+        elsif r.between?(3, 5) && c.between?(0, 3)
+          return true if @cells[r][c] == s && @cells[r - 1][c + 1] == s && @cells[r - 2][c + 2] == s && @cells[r - 3][c + 3] == s
+        # bottom right
+        elsif r.between?(3, 5) && c.between?(3, 6)
+          return true if @cells[r][c] == s && @cells[r - 1][c - 1] == s && @cells[r - 2][c - 2] == s && @cells[r - 3][c - 3] == s
+        end
+        c += 1
+      end
+      r += 1
+    end
+    false
   end
 end

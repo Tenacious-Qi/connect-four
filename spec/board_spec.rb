@@ -194,9 +194,9 @@ describe Board do
           [[nil, nil,'X', nil, nil, nil, nil],
           [nil, nil, 'X', nil, nil, nil, nil],
           [nil, 'O', 'O', 'O', 'X', 'O', nil],
-          [nil, nil, 'X', 'X', nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil]]
+          [nil, nil, 'X', 'X', 'O', 'X', nil],
+          [nil, nil, 'O', 'O', 'X', 'O', nil],
+          [nil, nil, 'O', 'X', 'O', 'X', nil]]
         )
       end
       it 'returns false' do
@@ -207,6 +207,24 @@ describe Board do
     context 'when board is empty' do
       it 'returns false' do
         expect(board.horizontal_four?(2, 'O')).to be false
+      end
+    end
+  end
+
+  describe '#diagonal_four?' do
+    context 'when there are 4 consecutive symbols of the same kind in a diagonal' do
+      before do
+        board.instance_variable_set(:@cells,
+         [[nil, nil, nil, nil, nil, nil, nil],
+          [nil, nil, 'X', 'X', nil, nil, nil],
+          [nil, nil, 'O', 'X', nil, nil, nil],
+          [nil, 'O', 'X', 'O', 'X', nil, nil],
+          [nil, 'O', 'O', 'X', nil, 'X', nil],
+          ['O', 'O', 'X', 'O', nil, nil, nil]]
+        )
+      end
+      it 'returns true' do
+        expect(board.diagonal_four?('X')).to be true
       end
     end
   end
