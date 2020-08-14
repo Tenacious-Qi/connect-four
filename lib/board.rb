@@ -45,7 +45,7 @@ class Board
   end
 
   def horizontal_four?(row, symbol, consec_count = 0)
-    get_row_with_four(row, symbol).each do |member|
+    get_row_with_four(symbol).each do |member|
       member == symbol ? consec_count += 1 : consec_count = 0
       return true if consec_count == 4
     end
@@ -53,7 +53,7 @@ class Board
   end
 
   # helper method for #horizontal_four?
-  def get_row_with_four(row, symbol)
+  def get_row_with_four(symbol)
     row_with_four = []
     @cells.each do |r|
       row_with_four << r if r.count(symbol) == 4
@@ -61,28 +61,34 @@ class Board
     row_with_four.flatten
   end
 
-  def diagonal_four?(s)
-    r = 0
-    until r > 5
-      c = 0
-      until c > 6
-        # top left
-        if r.between?(0, 2) && c.between?(0, 3)
-          return true if @cells[r][c] == s && @cells[r + 1][c + 1] == s && @cells[r + 2][c + 2] == s && @cells[r + 3][c + 3] == s
-        # top right
-        elsif r.between?(0, 2) && c.between?(3, 6)
-          return true if @cells[r][c] == s && @cells[r + 1][c - 1] == s && @cells[r + 2][c - 2] == s && @cells[r + 3][c - 3] == s
-        # bottom left
-        elsif r.between?(3, 5) && c.between?(0, 3)
-          return true if @cells[r][c] == s && @cells[r - 1][c + 1] == s && @cells[r - 2][c + 2] == s && @cells[r - 3][c + 3] == s
-        # bottom right
-        elsif r.between?(3, 5) && c.between?(3, 6)
-          return true if @cells[r][c] == s && @cells[r - 1][c - 1] == s && @cells[r - 2][c - 2] == s && @cells[r - 3][c - 3] == s
-        end
-        c += 1
+  def diagonal_four?(sym)
+    row = 0
+    until row > 5
+      col = 0
+      until col > 6
+        return true if line_found?(row, col, sym)
+
+        col += 1
       end
-      r += 1
+      row += 1
     end
     false
+  end
+
+  # helper method for diagonal_four?
+  def line_found?(row, col, sym)
+    # top left: row and col increase
+    if row.between?(0, 2) && col.between?(0, 3)
+      @cells[row][col] == sym && @cells[row + 1][col + 1] == sym && @cells[row + 2][col + 2] == sym && @cells[row + 3][col + 3] == sym
+    # top right: row increases, col decreases
+    elsif row.between?(0, 2) && col.between?(3, 6)
+      @cells[row][col] == sym && @cells[row + 1][col - 1] == sym && @cells[row + 2][col - 2] == sym && @cells[row + 3][col - 3] == sym
+    # bottom left: row decreases, col increases
+    elsif row.between?(3, 5) && col.between?(0, 3)
+      @cells[row][col] == sym && @cells[row - 1][col + 1] == sym && @cells[row - 2][col + 2] == sym && @cells[row - 3][col + 3] == sym
+    # bottom right: row and col decrease
+    elsif row.between?(3, 5) && col.between?(3, 6)
+      @cells[row][col] == sym && @cells[row - 1][col - 1] == sym && @cells[row - 2][col - 2] == sym && @cells[row - 3][col - 3] == sym
+    end
   end
 end

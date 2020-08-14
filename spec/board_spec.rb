@@ -217,14 +217,14 @@ describe Board do
         board.instance_variable_set(:@cells,
          [[nil, nil, nil, nil, nil, nil, nil],
           [nil, nil, 'X', 'X', nil, nil, nil],
-          [nil, nil, 'O', 'X', nil, nil, nil],
-          [nil, 'O', 'X', 'O', 'X', nil, nil],
-          [nil, 'O', 'O', 'X', nil, 'X', nil],
+          [nil, nil, 'O', 'O', nil, nil, nil],
+          [nil, 'O', 'O', 'O', 'X', nil, nil],
+          [nil, 'O', 'O', 'O', nil, 'X', nil],
           ['O', 'O', 'X', 'O', nil, nil, nil]]
         )
       end
       it 'returns true' do
-        expect(board.diagonal_four?('X')).to be true
+        expect(board.diagonal_four?('O')).to be true
       end
     end
   end
