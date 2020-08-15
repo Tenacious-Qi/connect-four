@@ -12,25 +12,27 @@ class Board
     input.between?(1, 7) && @cells.any? { |n| n[input - 1].nil? }
   end
 
-  def drop_checker(column, symbol)
-    if @cells.last[column]
-      find_next_avail(column, symbol)
+  def drop_checker(col, symbol)
+    if @cells.last[col]
+      find_next_row(col, symbol)
     else
-      @cells.last[column] = symbol
+      @cells.last[col] = symbol
     end
   end
 
   # helper method for #drop_checker
-  def find_next_avail(column, symbol)
-    next_avail_index = -1
-    while @cells[next_avail_index][column] && next_avail_index > -6
-      next_avail_index -= 1
+  def find_next_row(col, symbol)
+    row = 5
+    while @cells[row][col] && row > 0
+      return if @cells[0][col]
+
+      row -= 1
     end
-    @cells[next_avail_index][column] = symbol
+    @cells[row][col] = symbol
   end
 
-  def connect_vertical?(column, symbol, count = 0)
-    get_column_members(column).each do |member|
+  def connect_vertical?(col, symbol, count = 0)
+    get_col_members(col).each do |member|
       member == symbol ? count += 1 : count = 0
       return true if count == 4
     end
@@ -38,10 +40,10 @@ class Board
   end
 
   # helper method for #vertical_four?
-  def get_column_members(column)
-    column_members = []
-    0.upto(5) { |r| column_members << @cells[r][column] }
-    column_members
+  def get_col_members(col)
+    col_members = []
+    0.upto(5) { |r| col_members << @cells[r][col] }
+    col_members
   end
 
   def connect_horizontal?(symbol, count = 0)
@@ -94,7 +96,33 @@ class Board
   # checks if all members of a given diagonal on the board are of the same type.
   def diagonal_symbols_equal?(row, col, symbol, shift)
     line = []
-    4.times { |n| line << @cells[row + (shift[0] * n)][col + (shift[1] * n)] }
+    0.upto(3) { |n| line << @cells[row + (shift[0] * n)][col + (shift[1] * n)] }
     line.all?(symbol)
+  end
+
+  def display
+    @cells.each do |r|
+      print "#{r}\n"
+    end
+    nil
+  end
+
+  def display
+    clear_terminal
+    puts <<-HEREDOC
+    Current Game:
+
+      #{@cells[0]}   
+      #{@cells[1]}   
+      #{@cells[2]}
+      #{@cells[3]}   
+      #{@cells[4]}   
+      #{@cells[5]}
+
+    HEREDOC
+  end
+  
+  def clear_terminal
+    puts `clear`
   end
 end

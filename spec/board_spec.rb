@@ -127,6 +127,22 @@ describe Board do
         )
       end 
     end
+    context 'when a column is completely filled' do
+      before do
+        board.instance_variable_set(:@cells,
+
+         [[nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil],
+          [nil, nil, 'X', nil, nil, nil, nil]]
+        )
+      end
+      it 'returns nil' do
+        expect(board.drop_checker(2, 'X')).to be nil
+      end
+    end
   end
 
   describe '#connect_vertical?' do
