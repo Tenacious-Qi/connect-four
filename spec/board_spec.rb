@@ -129,7 +129,7 @@ describe Board do
     end
   end
 
-  describe '#vertical_four?' do
+  describe '#connect_vertical?' do
     context 'when there are four consecutive symbols of the same kind in a column' do
       before do
         board.instance_variable_set(:@cells, 
@@ -144,7 +144,7 @@ describe Board do
         )
       end
       it 'returns true' do
-        expect(board.vertical_four?(2, 'X')).to be true
+        expect(board.connect_vertical?(2, 'X')).to be true
       end
     end
     
@@ -160,18 +160,18 @@ describe Board do
         )
       end
       it 'returns false' do
-        expect(board.vertical_four?(2, 'X')).to be false
+        expect(board.connect_vertical?(2, 'X')).to be false
       end
     end
 
     context 'when board is empty' do
       it 'returns false' do
-        expect(board.vertical_four?(2, 'X')).to be false
+        expect(board.connect_vertical?(2, 'X')).to be false
       end
     end
   end
 
-  describe '#horizontal_four' do
+  describe '#connect_horizontal?' do
     context 'when there are 4 consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
@@ -184,7 +184,7 @@ describe Board do
         )
       end
       it 'returns true' do
-        expect(board.horizontal_four?(2, 'O')).to be true
+        expect(board.connect_horizontal?('O')).to be true
       end
     end
 
@@ -200,31 +200,63 @@ describe Board do
         )
       end
       it 'returns false' do
-        expect(board.horizontal_four?(2, 'O')).to be false
+        expect(board.connect_horizontal?(2, 'O')).to be false
       end
     end
 
     context 'when board is empty' do
       it 'returns false' do
-        expect(board.horizontal_four?(2, 'O')).to be false
+        expect(board.connect_horizontal?(2, 'O')).to be false
       end
     end
   end
 
-  describe '#diagonal_four?' do
+  describe '#connect_diagonal?' do
     context 'when there are 4 consecutive symbols of the same kind in a diagonal' do
       before do
         board.instance_variable_set(:@cells,
-         [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, 'X', 'X', nil, nil, nil],
-          [nil, nil, 'O', 'O', nil, nil, nil],
-          [nil, 'O', 'O', 'O', 'X', nil, nil],
-          [nil, 'O', 'O', 'O', nil, 'X', nil],
+         [['X', nil, nil, nil, nil, nil, nil],
+          [nil, 'X', 'X', 'X', nil, nil, nil],
+          [nil, nil, 'X', 'O', nil, nil, nil],
+          [nil, 'O', 'O', 'X', 'X', nil, nil],
+          [nil, 'X', 'O', 'O', nil, 'X', nil],
           ['O', 'O', 'X', 'O', nil, nil, nil]]
         )
       end
       it 'returns true' do
-        expect(board.diagonal_four?('O')).to be true
+        expect(board.connect_diagonal?('X')).to be true
+      end
+    end
+
+    context 'when there are NOT 4 consecutive symbols of the same kind in a diagonal' do
+      before do
+        board.instance_variable_set(:@cells,
+          [[nil, nil, nil, nil, nil, nil, nil],
+           [nil, nil, 'X', 'X', nil, nil, nil],
+           [nil, nil, 'X', 'O', nil, nil, nil],
+           [nil, 'O', 'O', 'X', 'X', nil, nil],
+           [nil, 'X', 'O', 'O', 'O', nil, nil],
+           ['O', 'O', 'X', 'O', 'X', nil, nil]]
+         )
+      end
+      it 'returns false' do
+        expect(board.connect_diagonal?('X')).to be false
+      end
+    end
+
+    context 'when there are 4 consecutive symbols of the same kind in the bottom right quadrant' do
+      before do
+        board.instance_variable_set(:@cells,
+          [[nil, nil, nil, nil, nil, nil, nil],
+           [nil, nil, 'O', 'X', nil, nil, nil],
+           [nil, nil, 'X', 'X', nil, nil, nil],
+           [nil, 'O', 'O', 'X', 'X', nil, nil],
+           [nil, 'X', 'O', 'O', 'O', 'X', nil],
+           ['O', 'O', 'X', 'O', 'X', 'O', 'X']]
+         )
+      end
+      it 'returns true' do
+        expect(board.connect_diagonal?('X')).to be true
       end
     end
   end

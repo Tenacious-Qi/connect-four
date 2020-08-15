@@ -29,10 +29,10 @@ class Board
     @cells[next_avail_index][column] = symbol
   end
 
-  def vertical_four?(column, symbol, consec_count = 0)
+  def connect_vertical?(column, symbol, count = 0)
     get_column_members(column).each do |member|
-      member == symbol ? consec_count += 1 : consec_count = 0
-      return true if consec_count == 4
+      member == symbol ? count += 1 : count = 0
+      return true if count == 4
     end
     false
   end
@@ -44,15 +44,15 @@ class Board
     column_members
   end
 
-  def horizontal_four?(row, symbol, consec_count = 0)
+  def connect_horizontal?(symbol, count = 0)
     get_row_with_four(symbol).each do |member|
-      member == symbol ? consec_count += 1 : consec_count = 0
-      return true if consec_count == 4
+      member == symbol ? count += 1 : count = 0
+      return true if count == 4
     end
     false
   end
 
-  # helper method for #horizontal_four?
+  # helper method for #connect_horizontal?
   def get_row_with_four(symbol)
     row_with_four = []
     @cells.each do |r|
@@ -61,12 +61,13 @@ class Board
     row_with_four.flatten
   end
 
-  def diagonal_four?(sym)
+  # loops over @cells, checking for a diagonal at each spot.
+  def connect_diagonal?(symbol)
     row = 0
     until row > 5
       col = 0
       until col > 6
-        return true if line_found?(row, col, sym)
+        return true if diagonal_four?(row, col, symbol)
 
         col += 1
       end
@@ -75,20 +76,25 @@ class Board
     false
   end
 
+  # helper method for connect_diagonal?
+  # sets shift according to current position on board,
+  # e.g. in top left quadrant of board,
+  # diagonal always goes down and to the right (row and col both increase by 1).
+  # so shift is [1, 1]
+  def diagonal_four?(row, col, symbol)
+    shift = []
+    shift[0] =  1 if row.between?(0, 2)
+    shift[0] = -1 if row.between?(3, 5)
+    shift[1] =  1 if col.between?(0, 3)
+    shift[1] = -1 if col.between?(3, 6)
+    diagonal_symbols_equal?(row, col, symbol, shift)
+  end
+
   # helper method for diagonal_four?
-  def line_found?(row, col, sym)
-    # top left: row and col increase
-    if row.between?(0, 2) && col.between?(0, 3)
-      @cells[row][col] == sym && @cells[row + 1][col + 1] == sym && @cells[row + 2][col + 2] == sym && @cells[row + 3][col + 3] == sym
-    # top right: row increases, col decreases
-    elsif row.between?(0, 2) && col.between?(3, 6)
-      @cells[row][col] == sym && @cells[row + 1][col - 1] == sym && @cells[row + 2][col - 2] == sym && @cells[row + 3][col - 3] == sym
-    # bottom left: row decreases, col increases
-    elsif row.between?(3, 5) && col.between?(0, 3)
-      @cells[row][col] == sym && @cells[row - 1][col + 1] == sym && @cells[row - 2][col + 2] == sym && @cells[row - 3][col + 3] == sym
-    # bottom right: row and col decrease
-    elsif row.between?(3, 5) && col.between?(3, 6)
-      @cells[row][col] == sym && @cells[row - 1][col - 1] == sym && @cells[row - 2][col - 2] == sym && @cells[row - 3][col - 3] == sym
-    end
+  # checks if all members of a given diagonal on the board are of the same type.
+  def diagonal_symbols_equal?(row, col, symbol, shift)
+    line = []
+    4.times { |n| line << @cells[row + (shift[0] * n)][col + (shift[1] * n)] }
+    line.all?(symbol)
   end
 end
