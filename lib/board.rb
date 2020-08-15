@@ -101,13 +101,6 @@ class Board
   end
 
   def display
-    @cells.each do |r|
-      print "#{r}\n"
-    end
-    nil
-  end
-
-  def display
     clear_terminal
     puts <<-HEREDOC
     Current Game:
@@ -121,7 +114,7 @@ class Board
 
     HEREDOC
   end
-  
+
   def clear_terminal
     puts `clear`
   end
