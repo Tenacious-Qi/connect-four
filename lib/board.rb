@@ -5,11 +5,11 @@
 # allows players to "drop checkers" into itself.
 class Board
   def initialize
-    @cells = Array.new(6) { Array.new(7) }
+    @cells = Array.new(6) { Array.new(7) { '-' } }
   end
 
   def valid?(input)
-    input.between?(1, 7) && @cells.any? { |n| n[input - 1].nil? }
+    input.between?(1, 7) && @cells.any? { |n| n[input - 1] == '-' }
   end
 
   def drop_checker(col, symbol)
@@ -23,8 +23,8 @@ class Board
   # helper method for #drop_checker
   def find_next_row(col, symbol)
     row = 5
-    while @cells[row][col] && row > 0
-      return if @cells[0][col]
+    until @cells[row][col] == '-'
+      return if @cells[0][col] != '-'
 
       row -= 1
     end
@@ -42,7 +42,7 @@ class Board
   # helper method for #vertical_four?
   def get_col_members(col)
     col_members = []
-    0.upto(5) { |r| col_members << @cells[r][col] }
+    0.upto(5) { |row| col_members << @cells[row][col] }
     col_members
   end
 
@@ -57,8 +57,8 @@ class Board
   # helper method for #connect_horizontal?
   def get_row_with_four(symbol)
     row_with_four = []
-    @cells.each do |r|
-      row_with_four << r if r.count(symbol) == 4
+    @cells.each do |row|
+      row_with_four << row if row.count(symbol) == 4
     end
     row_with_four.flatten
   end

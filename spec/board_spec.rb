@@ -22,12 +22,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-         [['X', nil, nil, nil, nil, nil, nil],
-          ['X', nil, nil, nil, nil, nil, nil],
-          ['X', nil, nil, nil, nil, nil, nil],
-          ['X', nil, nil, nil, nil, nil, nil],
-          ['X', nil, nil, nil, nil, nil, nil],
-          ['X', nil, nil, nil, nil, nil, nil]]
+         [["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"]]
         )
       end
 
@@ -41,12 +41,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-          [[nil, nil, nil, nil, nil, nil, nil],
-           [nil, nil, nil, nil, nil, nil, nil],
-           [nil, nil, nil, nil, nil, nil, nil],
-           [nil, nil, nil, nil, nil, nil, nil],
-           ['X', nil, nil, nil, nil, nil, nil],
-           ['X', nil, nil, nil, nil, nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"],
+          ["X", "-", "-", "-", "-", "-", "-"]]
          )
       end
       it 'returns true' do
@@ -59,7 +59,7 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-          [[nil, "X", "X", "X", "X", "X", "X"],
+          [['-', "X", "X", "X", "X", "X", "X"],
           ["X", "X", "X", "X", "X", "X", "X"],
           ["X", "X", "X", "X", "X", "X", "X"],
           ["X", "X", "X", "X", "X", "X", "X"],
@@ -91,12 +91,12 @@ describe Board do
         board.drop_checker(column, symbol)
         expect(board.instance_variable_get(:@cells)).to eq(
 
-          [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
         )
       end
     end
@@ -104,12 +104,12 @@ describe Board do
       it 'marks the last available spot' do
         board.instance_variable_set(:@cells,
 
-          [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
         )
 
         column = 2
@@ -117,12 +117,12 @@ describe Board do
         board.drop_checker(column, symbol_above)
         expect(board.instance_variable_get(:@cells)).to eq(
 
-         [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, nil, nil, nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "O", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
 
         )
       end 
@@ -131,12 +131,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-         [[nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil]]
+          [["-", "-","X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
         )
       end
       it 'returns nil' do
@@ -150,12 +150,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells, 
           
-          [[nil, nil, nil, nil, nil, nil, nil],
-          [nil, 'O', 'X', nil, nil, nil, nil],
-          [nil, 'O', 'X', nil, nil, nil, nil],
-          [nil, 'O', 'X', 'O', nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "O", "-", "-", "-", "-"]]
 
         )
       end
@@ -167,12 +167,12 @@ describe Board do
     context 'when there are four non-consecutive symbols of the same kind in a column' do
       before do
         board.instance_variable_set(:@cells,
-          [[nil, nil,'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, 'O', 'O', 'O', nil, nil, nil],
-          [nil, nil, 'X', 'X', nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil]]
+         [["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "O", "-", "-", "-", "-"],
+          ["-", "-", "O", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
         )
       end
       it 'returns false' do
@@ -191,12 +191,12 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
-          [[nil, nil,'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, 'O', 'O', 'O', 'O', nil, nil],
-          [nil, nil, 'X', 'X', nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil],
-          [nil, nil, 'O', nil, nil, nil, nil]]
+         [["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "O", "-", "-", "-", "-"],
+          ["-", "O", "O", "O", "O", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"],
+          ["-", "-", "X", "-", "-", "-", "-"]]
         )
       end
       it 'returns true' do
@@ -207,12 +207,12 @@ describe Board do
     context 'when there are 4 non-consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
-          [[nil, nil,'X', nil, nil, nil, nil],
-          [nil, nil, 'X', nil, nil, nil, nil],
-          [nil, 'O', 'O', 'O', 'X', 'O', nil],
-          [nil, nil, 'X', 'X', 'O', 'X', nil],
-          [nil, nil, 'O', 'O', 'X', 'O', nil],
-          [nil, nil, 'O', 'X', 'O', 'X', nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "O", "O", "X", "O", "O", "-"]]
         )
       end
       it 'returns false' do
@@ -231,12 +231,12 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in a diagonal' do
       before do
         board.instance_variable_set(:@cells,
-         [['X', nil, nil, nil, nil, nil, nil],
-          [nil, 'X', 'X', 'X', nil, nil, nil],
-          [nil, nil, 'X', 'O', nil, nil, nil],
-          [nil, 'O', 'O', 'X', 'X', nil, nil],
-          [nil, 'X', 'O', 'O', nil, 'X', nil],
-          ['O', 'O', 'X', 'O', nil, nil, nil]]
+         [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "X", "-", "-", "-"],
+          ["-", "-", "-", "O", "X", "-", "-"],
+          ["-", "-", "-", "X", "X", "X", "-"],
+          ["-", "-", "-", "O", "O", "X", "X"],
+          ["-", "-", "-", "X", "X", "O", "O"]]
         )
       end
       it 'returns true' do
@@ -247,12 +247,12 @@ describe Board do
     context 'when there are NOT 4 consecutive symbols of the same kind in a diagonal' do
       before do
         board.instance_variable_set(:@cells,
-          [[nil, nil, nil, nil, nil, nil, nil],
-           [nil, nil, 'X', 'X', nil, nil, nil],
-           [nil, nil, 'X', 'O', nil, nil, nil],
-           [nil, 'O', 'O', 'X', 'X', nil, nil],
-           [nil, 'X', 'O', 'O', 'O', nil, nil],
-           ['O', 'O', 'X', 'O', 'X', nil, nil]]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "O", "-", "-", "-"],
+          ["-", "-", "-", "O", "X", "-", "-"],
+          ["-", "-", "-", "X", "X", "X", "-"],
+          ["-", "-", "-", "O", "O", "X", "X"],
+          ["-", "-", "-", "X", "X", "O", "O"]]
          )
       end
       it 'returns false' do
@@ -263,12 +263,12 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in the bottom right quadrant' do
       before do
         board.instance_variable_set(:@cells,
-          [[nil, nil, nil, nil, nil, nil, nil],
-           [nil, nil, 'O', 'X', nil, nil, nil],
-           [nil, nil, 'X', 'X', nil, nil, nil],
-           [nil, 'O', 'O', 'X', 'X', nil, nil],
-           [nil, 'X', 'O', 'O', 'O', 'X', nil],
-           ['O', 'O', 'X', 'O', 'X', 'O', 'X']]
+          [["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "-", "-", "-", "-"],
+          ["-", "-", "-", "X", "-", "-", "-"],
+          ["-", "-", "-", "X", "X", "-", "-"],
+          ["-", "-", "-", "O", "O", "X", "-"],
+          ["-", "-", "-", "X", "X", "O", "X"]]
          )
       end
       it 'returns true' do
