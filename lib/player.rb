@@ -1,24 +1,35 @@
+require 'colorize'
 
 class Player
+  attr_reader :symbol, :name
+  attr_accessor :winner
+
   def initialize
-    @name = get_name
-    @symbol = get_symbol
+    @name = ''
+    @symbol = ''
     @winner = false
   end
 
   def get_name
-    print 'please enter your name: '
     name = gets.chomp
-    valid_name?(name) ? name : get_name
+    valid_name?(name) ? @name = name : get_name
   end
 
+  CHOICES = [
+    "\u2666".colorize(:yellow), "\u2665".colorize(:red), 
+    "\u2660".colorize(:yellow), "\u2663".colorize(:red)
+    ]
+
   def get_symbol
-    choices = ["\u2666", "\u2665", "\u2660", "\u2663"]
-    puts "#{@name}, please choose your board checker: "
-    puts "Your choices are: #{choices[0]}, #{choices[1]}, #{choices[2]}, #{choices[3]}"
-    puts "please enter 1 [ \u2666 ], 2 [ \u2665 ], 3 [ \u2660 ], or 4 [ \u2663 ]"
+    puts "#{@name}, please choose a checker type. "
+    print "Your choices are: 1 [ #{CHOICES[0]} ], 2 [ #{CHOICES[1]} ], 3 [ #{CHOICES[2]} ], or 4 [ #{CHOICES[3]} ]: "
     choice = gets.chomp.to_i
-    valid_checker_selection?(choice) ? choices[choice - 1] : get_symbol
+    if valid_checker_selection?(choice)
+      @symbol = CHOICES[choice - 1]
+      puts "\n#{@name}'s checker is #{@symbol}"
+    else
+      get_symbol
+    end
   end
 
   def valid_name?(input)

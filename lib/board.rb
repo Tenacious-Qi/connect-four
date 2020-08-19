@@ -24,7 +24,7 @@ class Board
   def find_next_row(col, symbol)
     row = 5
     until @cells[row][col] == '-'
-      return if @cells[0][col] != '-'
+      return unless @cells[0][col] == '-'
 
       row -= 1
     end
@@ -47,7 +47,7 @@ class Board
   end
 
   def connect_horizontal?(symbol, count = 0)
-    get_row_with_four(symbol).each do |member|
+    get_rows_with_four(symbol).each do |member|
       member == symbol ? count += 1 : count = 0
       return true if count == 4
     end
@@ -55,12 +55,8 @@ class Board
   end
 
   # helper method for #connect_horizontal?
-  def get_row_with_four(symbol)
-    row_with_four = []
-    @cells.each do |row|
-      row_with_four << row if row.count(symbol) == 4
-    end
-    row_with_four.flatten
+  def get_rows_with_four(symbol)
+    @cells.select { |row| row.count(symbol) == 4 }.flatten
   end
 
   # loops over @cells, checking for a diagonal at each spot.
@@ -98,6 +94,10 @@ class Board
     line = []
     0.upto(3) { |n| line << @cells[row + (shift[0] * n)][col + (shift[1] * n)] }
     line.all?(symbol)
+  end
+
+  def full?
+    @cells.all? { |row| row.none?('-') }
   end
 
   def display

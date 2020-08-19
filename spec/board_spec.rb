@@ -191,7 +191,7 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
-         [["-", "-", "X", "-", "-", "-", "-"],
+         [["O", "O", "X", "O", "O", "-", "-"],
           ["-", "-", "X", "-", "-", "-", "-"],
           ["-", "-", "O", "-", "-", "-", "-"],
           ["-", "O", "O", "O", "O", "-", "-"],
@@ -259,20 +259,22 @@ describe Board do
         expect(board.connect_diagonal?('X')).to be false
       end
     end
+  end
 
-    context 'when there are 4 consecutive symbols of the same kind in the bottom right quadrant' do
+  describe '#full?' do
+    context 'when all the spaces on the board are occupied' do
       before do
         board.instance_variable_set(:@cells,
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "X", "-", "-", "-"],
-          ["-", "-", "-", "X", "X", "-", "-"],
-          ["-", "-", "-", "O", "O", "X", "-"],
-          ["-", "-", "-", "X", "X", "O", "X"]]
-         )
+          [["X", "X", "X", "X", "X", "X", "X"],
+          ["X", "X", "X", "X", "X", "X", "X"],
+          ["X", "X", "X", "X", "X", "X", "X"],
+          ["X", "X", "X", "X", "X", "X", "X"],
+          ["X", "X", "X", "X", "X", "X", "X"],
+          ["X", "X", "X", "X", "X", "X", "X"]] 
+        )
       end
       it 'returns true' do
-        expect(board.connect_diagonal?('X')).to be true
+        expect(board.full?).to be true
       end
     end
   end
