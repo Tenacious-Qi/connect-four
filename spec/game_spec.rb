@@ -43,6 +43,7 @@ describe Game do
         allow(game).to receive(:gets).and_return(p1_col)
         allow(p1).to receive(:name)
         allow(p1).to receive(:symbol)
+        allow(game).to receive(:check_for_winner)
       end
       it 'tells @board to mark selected column' do
         expect(board).to receive(:drop_checker).with(p1_col.to_i - 1, p1.symbol)
@@ -51,8 +52,47 @@ describe Game do
     end
   end
 
-  describe '#assign_winner' do
-    
+  describe '#check_for_winner' do
+
+    before do
+      allow(p1).to receive(:symbol).and_return('X')
+      allow(board).to receive(:connect_vertical?)
+      allow(board).to receive(:connect_diagonal?)
+      allow(board).to receive(:connect_horizontal?)
+    end
+
+    context 'when there are 4 symbols of the same kind in a board row' do
+      before do
+        allow(board).to receive(:connect_horizontal?).with('X').and_return(true)
+      end
+      it 'tells player instance with that symbol to assign itself as the winner' do
+        expect(p1).to receive(:assign_winner)
+        game.check_for_winner('X')
+      end
+    end
+
+    context 'when there are 4 symbols of the same kind in a board column' do
+
+      winning_col = 2
+
+      before do
+        allow(board).to receive(:connect_vertical?).with(winning_col - 1, 'X').and_return(true)
+      end
+      it 'tells player instance with that symbol to assign itself as the winner' do
+        expect(p1).to receive(:assign_winner)
+        game.check_for_winner('X', winning_col)
+      end
+    end
+
+    context 'when there are 4 symbols of the same kind in a board diagonal' do
+      before do
+        allow(board).to receive(:connect_diagonal?).with('X').and_return(:true)
+      end
+      it 'tells player instance with that symbol to assign itself as the winner' do
+        expect(p1).to receive(:assign_winner)
+        game.check_for_winner('X')
+      end
+    end
   end
 
 end

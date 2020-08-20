@@ -13,22 +13,17 @@ class Board
   end
 
   def drop_checker(col, symbol)
-    if @cells.last[col]
-      find_next_row(col, symbol)
-    else
-      @cells.last[col] = symbol
-    end
-  end
-
-  # helper method for #drop_checker
-  def find_next_row(col, symbol)
     row = 5
     until @cells[row][col] == '-'
-      return unless @cells[0][col] == '-'
+      return if column_full?(col)
 
       row -= 1
     end
     @cells[row][col] = symbol
+  end
+
+  def column_full?(col)
+    @cells[0][col] != '-'
   end
 
   def connect_vertical?(col, symbol, count = 0)
@@ -101,21 +96,14 @@ class Board
   end
 
   def display
-    clear_terminal
-    puts <<-HEREDOC
-    Current Game:
-
-      #{@cells[0]}   
-      #{@cells[1]}   
-      #{@cells[2]}
-      #{@cells[3]}   
-      #{@cells[4]}   
-      #{@cells[5]}
-
-    HEREDOC
-  end
-
-  def clear_terminal
-    puts `clear`
+    puts "\nCurrent Round: "
+    @cells.each do |row|
+      print "\n\t"
+      row.each do |s|
+        print " #{s} "
+      end
+    end
+    puts "\n\n\t 1  2  3  4  5  6  7"
+    puts
   end
 end
