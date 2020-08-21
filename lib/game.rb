@@ -14,20 +14,20 @@ class Game
   def start_game
     show_welcome_message
     print 'Player 1, please enter your name: '
-    get_p1_info
+    request_p1_info
     puts
     print 'Player 2, please enter your name: '
-    get_p2_info
+    request_p2_info
   end
 
-  def get_p1_info
-    @p1.get_name
-    @p1.get_symbol
+  def request_p1_info
+    @p1.request_name
+    @p1.request_symbol
   end
 
-  def get_p2_info
-    @p2.get_name
-    @p2.get_symbol
+  def request_p2_info
+    @p2.request_name
+    @p2.request_symbol
   end
 
   def show_welcome_message
@@ -82,7 +82,7 @@ class Game
   def check_for_winner(symbol, col = 0)
     if symbol == @p1.symbol
       @p1.assign_winner if win?(symbol, col)
-    else
+    elsif symbol == @p2.symbol
       @p2.assign_winner if win?(symbol, col)
     end
   end
@@ -107,7 +107,6 @@ class Game
       answer = gets.chomp.upcase
     end
     @play_again = true if answer.match?(/[Y]/)
-    @play_again = false if answer.match?(/[N]/)
   end
 
   def over?
