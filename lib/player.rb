@@ -43,9 +43,9 @@ class Player
 
   def show_symbol_choices
     puts "#{@name}, please choose a checker type. "
-    print 'Your choices are ' \
-    "1 [ #{CHOICES[0]} ], 2 [ #{CHOICES[1]} ], " \
-    "3 [ #{CHOICES[2]} ], or 4 [ #{CHOICES[3]} ]: "
+    print 'Your choices are: ' \
+    "#{CHOICES[0]} (1), #{CHOICES[1]} (2), " \
+    "#{CHOICES[2]} (3), or #{CHOICES[3]} (4): "
   end
 
   def assign_symbol(choice)
