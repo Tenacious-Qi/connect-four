@@ -58,25 +58,37 @@ class Game
   end
 
   def p1_turn
-    print "#{@p1.name}, choose a column to drop your checker into: "
-    p1_col = gets.chomp.to_i
-    if @board.column_full?(p1_col - 1)
-      puts 'column full. please select again...'
-      p1_turn
+    p1_col = request_p1_col
+    loop do
+      break if @board.valid?(p1_col)
+
+      puts 'column unavailable. please select again...'
+      p1_col = request_p1_col
     end
     @board.drop_checker(p1_col - 1, @p1.symbol)
     check_for_winner(@p1.symbol, p1_col)
   end
 
+  def request_p1_col
+    print "#{@p1.name}, choose a column to drop your checker into: "
+    gets.chomp.to_i
+  end
+
   def p2_turn
-    print "#{@p2.name}, choose a column to drop your checker into: "
-    p2_col = gets.chomp.to_i
-    if @board.column_full?(p2_col - 1)
-      puts 'column full. please select again...'
-      p2_turn
+    p2_col = request_p2_col
+    loop do
+      break if @board.valid?(p2_col)
+
+      puts 'column unavailable. please select again...'
+      p2_col = request_p2_col
     end
     @board.drop_checker(p2_col - 1, @p2.symbol)
     check_for_winner(@p2.symbol, p2_col)
+  end
+
+  def request_p2_col
+    print "#{@p2.name}, choose a column to drop your checker into: "
+    gets.chomp.to_i
   end
 
   def check_for_winner(symbol, col = 0)

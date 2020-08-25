@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/board.rb'
 
 describe Board do
@@ -21,14 +23,12 @@ describe Board do
     context 'when column is full' do
       before do
         board.instance_variable_set(:@cells,
-
-         [["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"]]
-        )
+         [%w[X - - - - - -],
+          %w[X - - - - - -],
+          %w[X - - - - - -],
+          %w[X - - - - - -],
+          %w[X - - - - - -],
+          %w[X - - - - - -]])
       end
 
       it 'returns false' do
@@ -41,13 +41,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"],
-          ["X", "-", "-", "-", "-", "-", "-"]]
-         )
+         [%w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[X - - - - - -],
+          %w[X - - - - - -]])
       end
       it 'returns true' do
         move = 1
@@ -59,13 +58,12 @@ describe Board do
       before do
         board.instance_variable_set(:@cells,
 
-          [['-', "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"]]
-         )
+         [%w[- X X X X X X],
+          %w[X X X X X X X],
+          %w[X X X X X X X],
+          %w[X X X X X X X],
+          %w[X X X X X X X],
+          %w[X X X X X X X]])
       end
       context 'when user inputs the open column' do
         it 'returns true' do
@@ -91,53 +89,47 @@ describe Board do
         board.drop_checker(column, symbol)
         expect(board.instance_variable_get(:@cells)).to eq(
 
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-        )
+         [%w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - X - - - -]])
       end
     end
     context 'when a column is partially filled' do
       it 'marks the last available spot' do
         board.instance_variable_set(:@cells,
 
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-        )
-
+         [%w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - X - - - -]])
         column = 2
         symbol_above = 'O'
         board.drop_checker(column, symbol_above)
         expect(board.instance_variable_get(:@cells)).to eq(
 
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "O", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-
-        )
+         [%w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - O - - - -],
+          %w[- - X - - - -]])
       end 
     end
     context 'when a column is completely filled' do
       before do
         board.instance_variable_set(:@cells,
 
-          [["-", "-","X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-        )
+         [%w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -]])
       end
       it 'returns nil' do
         expect(board.drop_checker(2, 'X')).to be nil
@@ -148,16 +140,13 @@ describe Board do
   describe '#connect_vertical?' do
     context 'when there are four consecutive symbols of the same kind in a column' do
       before do
-        board.instance_variable_set(:@cells, 
-          
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "O", "-", "-", "-", "-"]]
-
-        )
+        board.instance_variable_set(:@cells,
+         [%w[- - - - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - O - - - -]])
       end
       it 'returns true' do
         expect(board.connect_vertical?(2, 'X')).to be true
@@ -167,13 +156,12 @@ describe Board do
     context 'when there are four non-consecutive symbols of the same kind in a column' do
       before do
         board.instance_variable_set(:@cells,
-         [["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "O", "-", "-", "-", "-"],
-          ["-", "-", "O", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-        )
+         [%w[- - X - - - -],
+          %w[- - X - - - -],
+          %w[- - O - - - -],
+          %w[- - O - - - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -]])
       end
       it 'returns false' do
         expect(board.connect_vertical?(2, 'X')).to be false
@@ -191,13 +179,12 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
-         [["O", "O", "X", "O", "O", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "O", "-", "-", "-", "-"],
-          ["-", "O", "O", "O", "O", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"],
-          ["-", "-", "X", "-", "-", "-", "-"]]
-        )
+         [%w[O O X O O - -],
+          %w[- - X - - - -],
+          %w[- - O - - - -],
+          %w[- O O O O - -],
+          %w[- - X - - - -],
+          %w[- - X - - - -]])
       end
       it 'returns true' do
         expect(board.connect_horizontal?('O')).to be true
@@ -207,13 +194,12 @@ describe Board do
     context 'when there are 4 non-consecutive symbols of the same kind in a row' do
       before do
         board.instance_variable_set(:@cells,
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "O", "O", "X", "O", "O", "-"]]
-        )
+         [%w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[- - - - - - -],
+          %w[O O X O O X -]])
       end
       it 'returns false' do
         expect(board.connect_horizontal?(2, 'O')).to be false
@@ -231,13 +217,12 @@ describe Board do
     context 'when there are 4 consecutive symbols of the same kind in a diagonal' do
       before do
         board.instance_variable_set(:@cells,
-         [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "X", "-", "-", "-"],
-          ["-", "-", "-", "O", "X", "-", "-"],
-          ["-", "-", "-", "X", "X", "X", "-"],
-          ["-", "-", "-", "O", "O", "X", "X"],
-          ["-", "-", "-", "X", "X", "O", "O"]]
-        )
+         [%w[- - - - - - -],
+          %w[- - - X - - -],
+          %w[- - - - X - -],
+          %w[- - - - - X -],
+          %w[- - - - - - X],
+          %w[- - - - - - -]])
       end
       it 'returns true' do
         expect(board.connect_diagonal?('X')).to be true
@@ -247,13 +232,13 @@ describe Board do
     context 'when there are NOT 4 consecutive symbols of the same kind in a diagonal' do
       before do
         board.instance_variable_set(:@cells,
-          [["-", "-", "-", "-", "-", "-", "-"],
-          ["-", "-", "-", "O", "-", "-", "-"],
-          ["-", "-", "-", "O", "X", "-", "-"],
-          ["-", "-", "-", "X", "X", "X", "-"],
-          ["-", "-", "-", "O", "O", "X", "X"],
-          ["-", "-", "-", "X", "X", "O", "O"]]
-         )
+         [%w[- - - - - - -],
+          %w[- - - O O O -],
+          %w[- - - O O O -],
+          %w[- - - O O O -],
+          %w[- - - O O O -],
+          %w[- - - O O O -],
+          %w[- - - O O O X]])
       end
       it 'returns false' do
         expect(board.connect_diagonal?('X')).to be false
@@ -265,13 +250,12 @@ describe Board do
     context 'when all the spaces on the board are occupied' do
       before do
         board.instance_variable_set(:@cells,
-          [["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"],
-          ["X", "X", "X", "X", "X", "X", "X"]] 
-        )
+          [%w[X X X X X X X],
+           %w[X X X X X X X],
+           %w[X X X X X X X],
+           %w[X X X X X X X],
+           %w[X X X X X X X],
+           %w[X X X X X X X]])
       end
       it 'returns true' do
         expect(board.full?).to be true
@@ -279,5 +263,3 @@ describe Board do
     end
   end
 end
-
-

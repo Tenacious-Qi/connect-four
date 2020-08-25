@@ -8,22 +8,18 @@ class Board
     @cells = Array.new(6) { Array.new(7) { '-' } }
   end
 
-  def valid?(input)
-    input.between?(1, 7) && @cells.any? { |n| n[input - 1] == '-' }
-  end
-
   def drop_checker(col, symbol)
     row = 5
     until @cells[row][col] == '-'
-      return if column_full?(col)
+      return unless @cells[0][col] == '-'
 
       row -= 1
     end
     @cells[row][col] = symbol
   end
 
-  def column_full?(col)
-    @cells[0][col] != '-'
+  def valid?(input)
+    input.between?(1, 7) && @cells.any? { |n| n[input - 1] == '-' }
   end
 
   def connect_vertical?(col, symbol, count = 0)

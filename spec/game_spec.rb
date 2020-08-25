@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require './lib/game.rb'
 require './lib/board.rb'
 require './lib/player.rb'
@@ -17,18 +19,18 @@ describe Game do
   describe '#start_game' do
     context 'when game is starting' do
       before do
-        allow(p1).to receive(:get_name)
-        allow(p1).to receive(:get_symbol)
-        allow(p2).to receive(:get_name)
-        allow(p2).to receive(:get_symbol)
+        allow(p1).to receive(:request_name)
+        allow(p1).to receive(:request_symbol)
+        allow(p2).to receive(:request_name)
+        allow(p2).to receive(:request_symbol)
       end
       it 'tells @p1 to assign itself a name attribute' do
-        expect(p1).to receive(:get_name)
+        expect(p1).to receive(:request_name)
         game.start_game
       end
 
       it 'tells @p1 to assign itself a symbol' do
-        expect(p1).to receive(:get_symbol)
+        expect(p1).to receive(:request_symbol)
         game.start_game
       end
     end
@@ -44,6 +46,7 @@ describe Game do
         allow(p1).to receive(:name)
         allow(p1).to receive(:symbol)
         allow(game).to receive(:check_for_winner)
+        allow(board).to receive(:valid?).and_return(true)
       end
       it 'tells @board to mark selected column' do
         expect(board).to receive(:drop_checker).with(p1_col.to_i - 1, p1.symbol)
@@ -94,5 +97,4 @@ describe Game do
       end
     end
   end
-
 end

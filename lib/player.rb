@@ -15,7 +15,25 @@ class Player
 
   def request_name
     name = gets.chomp
-    valid_name?(name) ? @name = name : request_name
+    loop do
+      break if valid_name?(name)
+
+      print 'please enter a valid name: '
+      name = gets.chomp
+    end
+    @name = name
+  end
+
+  def request_symbol
+    show_symbol_choices
+    choice = gets.chomp.to_i
+    loop do
+      break if valid_checker?(choice)
+
+      print 'please enter a number 1 thru 4: '
+      choice = gets.chomp.to_i
+    end
+    assign_symbol(choice)
   end
 
   CHOICES = [
@@ -23,18 +41,16 @@ class Player
     "\u2660".colorize(:blue), "\u2663".colorize(:green)
   ].freeze
 
-  def request_symbol
+  def show_symbol_choices
     puts "#{@name}, please choose a checker type. "
-    print "Your choices are " +
-    "1 [ #{CHOICES[0]} ], 2 [ #{CHOICES[1]} ], " + 
+    print 'Your choices are ' \
+    "1 [ #{CHOICES[0]} ], 2 [ #{CHOICES[1]} ], " \
     "3 [ #{CHOICES[2]} ], or 4 [ #{CHOICES[3]} ]: "
-    choice = gets.chomp.to_i
-    valid_checker?(choice) ? assign_symbol(choice) : request_symbol
   end
 
   def assign_symbol(choice)
+    puts "\n#{@name}'s checker is #{CHOICES[choice - 1]}"
     @symbol = CHOICES[choice - 1]
-    puts "\n#{@name}'s checker is #{@symbol}"
   end
 
   def valid_name?(input)
