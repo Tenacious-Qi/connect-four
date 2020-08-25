@@ -23,6 +23,7 @@ describe Game do
         allow(p1).to receive(:request_symbol)
         allow(p2).to receive(:request_name)
         allow(p2).to receive(:request_symbol)
+        allow(game).to receive(:check_if_same_symbol)
       end
       it 'tells @p1 to assign itself a name attribute' do
         expect(p1).to receive(:request_name)

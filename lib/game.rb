@@ -28,6 +28,15 @@ class Game
   def request_p2_info
     @p2.request_name
     @p2.request_symbol
+    check_if_same_symbol
+  end
+
+  def check_if_same_symbol
+    while @p1.symbol == @p2.symbol
+      puts "\n ** symbol taken, please select again **"
+      puts
+      @p2.request_symbol
+    end
   end
 
   def show_welcome_message
