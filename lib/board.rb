@@ -4,8 +4,11 @@
 # for 4 symbols in a line.
 # allows players to "drop checkers" into itself.
 class Board
+  attr_accessor :round
+
   def initialize
     @cells = Array.new(6) { Array.new(7) { '-' } }
+    @round = 1
   end
 
   def drop_checker(col, symbol)
@@ -92,7 +95,7 @@ class Board
   end
 
   def display
-    puts "\nCurrent Round: "
+    puts "\nRound #{@round}: "
     @cells.each do |row|
       print "\n\t"
       row.each do |s|

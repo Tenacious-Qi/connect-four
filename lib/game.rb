@@ -34,7 +34,6 @@ class Game
   def check_if_same_symbol
     while @p1.symbol == @p2.symbol
       puts "\n ** symbol taken, please select again **"
-      puts
       @p2.request_symbol
     end
   end
@@ -84,6 +83,7 @@ class Game
   end
 
   def p2_turn
+    @board.round += 1
     p2_col = request_p2_col
     loop do
       break if @board.valid?(p2_col)
