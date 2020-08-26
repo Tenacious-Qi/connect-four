@@ -74,7 +74,7 @@ class Game
       p1_col = request_p1_col
     end
     @board.drop_checker(p1_col - 1, @p1.symbol)
-    check_for_winner(@p1.symbol, p1_col)
+    @p1.assign_winner if win?(@p1.symbol, p1_col)
   end
 
   def request_p1_col
@@ -92,20 +92,12 @@ class Game
       p2_col = request_p2_col
     end
     @board.drop_checker(p2_col - 1, @p2.symbol)
-    check_for_winner(@p2.symbol, p2_col)
+    @p2.assign_winner if win?(@p2.symbol, p2_col)
   end
 
   def request_p2_col
     print "#{@p2.name}, choose a column to drop your checker into: "
     gets.chomp.to_i
-  end
-
-  def check_for_winner(symbol, col = 0)
-    if symbol == @p1.symbol
-      @p1.assign_winner if win?(symbol, col)
-    elsif symbol == @p2.symbol
-      @p2.assign_winner if win?(symbol, col)
-    end
   end
 
   def win?(symbol, col)

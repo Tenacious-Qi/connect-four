@@ -202,13 +202,14 @@ describe Board do
           %w[O O X O O X -]])
       end
       it 'returns false' do
-        expect(board.connect_horizontal?(2, 'O')).to be false
+        expect(board.connect_horizontal?('O')).to be false
       end
     end
 
     context 'when board is empty' do
+      board = Board.new
       it 'returns false' do
-        expect(board.connect_horizontal?(2, 'O')).to be false
+        expect(board.connect_horizontal?('O')).to be false
       end
     end
   end

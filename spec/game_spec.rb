@@ -46,7 +46,7 @@ describe Game do
         allow(game).to receive(:gets).and_return(p1_col)
         allow(p1).to receive(:name)
         allow(p1).to receive(:symbol)
-        allow(game).to receive(:check_for_winner)
+        allow(game).to receive(:win?)
         allow(board).to receive(:valid?).and_return(true)
       end
       it 'tells @board to mark selected column' do

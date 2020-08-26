@@ -5,7 +5,7 @@ require_relative './game.rb'
 require_relative './board.rb'
 require_relative './player.rb'
 
-game = Game.new
+game = Game.new(p1 = Player.new, p2 = Player.new, board = Board.new)
 game.start_game
 game.play_game
 

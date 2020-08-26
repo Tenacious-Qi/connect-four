@@ -40,17 +40,15 @@ class Board
     col_members
   end
 
-  def connect_horizontal?(symbol, count = 0)
-    get_rows_with_four(symbol).each do |member|
-      member == symbol ? count += 1 : count = 0
-      return true if count == 4
+  def connect_horizontal?(symbol)
+    count = 0
+    @cells.each do |row|
+      row.each do |member|
+        member == symbol ? count += 1 : count = 0
+        return true if count == 4
+      end
     end
     false
-  end
-
-  # helper method for #connect_horizontal?
-  def get_rows_with_four(symbol)
-    @cells.select { |row| row.count(symbol) == 4 }.flatten
   end
 
   # loops over @cells, checking for a diagonal at each spot.
