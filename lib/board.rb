@@ -53,7 +53,6 @@ class Board
     false
   end
 
-  # this is only counting the rows that pertain to symbol argument
   def get_rows_with_four(symbol)
     @cells.select { |row| row.count(symbol) == 4 }
   end
