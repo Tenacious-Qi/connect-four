@@ -58,7 +58,7 @@ class Game
     until over?
       p1_turn unless @p2.winner
       @board.display
-      p2_turn unless @p1.winner
+      p2_turn unless over?
       @board.display
     end
     declare_winner
@@ -101,8 +101,9 @@ class Game
   end
 
   def win?(symbol, col)
-    @board.connect_horizontal?(symbol)    ||
-      @board.connect_diagonal?(symbol)    ||
+    @board.connect_horizontal?(@p1.symbol)    ||
+      @board.connect_horizontal?(@p2.symbol)||
+      @board.connect_diagonal?(symbol)      ||
       @board.connect_vertical?(col - 1, symbol)
   end
 
