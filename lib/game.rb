@@ -11,6 +11,21 @@ class Game
     @play_again = false
   end
 
+  def show_welcome_message
+    puts <<-HEREDOC
+
+    Welcome to #{'Connect'.colorize(:red)}-#{'Four'.colorize(:yellow)}!
+
+    * Win the game by connecting four checkers in a row, column, or diagonal line.
+    * Don't let your opponent sneak up on you!
+
+    * Before game starts, players will enter names and choose a checker type.
+
+    #{'Good luck!'.colorize(:green)}
+
+    HEREDOC
+  end
+
   def start_game
     show_welcome_message
     print 'Player 1, please enter your name: '
@@ -26,21 +41,6 @@ class Game
       puts "\n ** symbol taken, please select again **"
       @player2.request_symbol
     end
-  end
-
-  def show_welcome_message
-    puts <<-HEREDOC
-
-    Welcome to Connect Four!
-
-    Win the game by connecting four checkers in a row, column, or diagonal line.
-    Don't let your opponent sneak up on you!
-
-    Before game starts, players will enter names and choose a checker type.
-
-    Good luck!
-
-    HEREDOC
   end
 
   def play_game
