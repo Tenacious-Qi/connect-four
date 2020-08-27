@@ -101,9 +101,8 @@ class Game
   end
 
   def win?(symbol, col)
-    @board.connect_horizontal?(@p1.symbol)  ||
-      @board.connect_horizontal?(@p2.symbol)||
-      @board.connect_diagonal?(symbol)      ||
+    @board.connect_horizontal?(symbol)  ||
+      @board.connect_diagonal?(symbol)  ||
       @board.connect_vertical?(col - 1, symbol)
   end
 
