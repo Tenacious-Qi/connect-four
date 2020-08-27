@@ -18,6 +18,7 @@ class Board
 
       row -= 1
     end
+    puts `clear`
     @cells[row][col] = symbol
   end
 
