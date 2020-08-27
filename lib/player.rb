@@ -13,6 +13,11 @@ class Player
     @winner = false
   end
 
+  def request_info
+    request_name
+    request_symbol
+  end
+
   def request_name
     name = gets.chomp
     loop do
