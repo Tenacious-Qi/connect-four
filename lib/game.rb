@@ -47,9 +47,7 @@ class Game
     @board.display
     until over?
       player1_turn unless @player2.winner
-      @board.display
       player2_turn unless over?
-      @board.display
     end
     declare_winner
     prompt_to_play_again
@@ -64,6 +62,7 @@ class Game
       player1_col = request_player1_col
     end
     @board.drop_checker(player1_col - 1, @player1.symbol)
+    @board.display
     @player1.assign_winner if win?(@player1.symbol, player1_col)
   end
 
@@ -82,6 +81,7 @@ class Game
       player2_col = request_player2_col
     end
     @board.drop_checker(player2_col - 1, @player2.symbol)
+    @board.display
     @player2.assign_winner if win?(@player2.symbol, player2_col)
   end
 
