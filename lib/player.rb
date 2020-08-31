@@ -22,13 +22,6 @@ class Player
     @winner = true
   end
 
-  CHOICES = [
-    "\u2666".colorize(:yellow), "\u2665".colorize(:red),
-    "\u2660".colorize(:blue), "\u2663".colorize(:green)
-  ].freeze
-
-  private
-
   def request_name
     name = gets.chomp
     loop do
@@ -51,6 +44,13 @@ class Player
     end
     assign_symbol(choice)
   end
+
+  CHOICES = [
+    "\u2666".colorize(:yellow), "\u2665".colorize(:red),
+    "\u2660".colorize(:blue), "\u2663".colorize(:green)
+  ].freeze
+
+  private
 
   def show_symbol_choices
     puts "#{@name}, please choose a checker type. "
