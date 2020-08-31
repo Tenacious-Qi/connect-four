@@ -119,6 +119,6 @@ class Game
   def declare_winner
     puts "#{@player1.name} wins!"               if @player1.winner
     puts "#{@player2.name} wins!"               if @player2.winner
-    puts 'game ended without a winner :-/' if tied?
+    puts 'game ended without a winner :-/'      if tied?
   end
 end
