@@ -4,8 +4,6 @@
 class Game
   attr_accessor :play_again
 
-  protected :play_again
-
   def initialize(player1 = Player.new, player2 = Player.new, board = Board.new)
     @board = board
     @player1 = player1

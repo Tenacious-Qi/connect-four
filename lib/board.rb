@@ -6,6 +6,8 @@
 class Board
   attr_accessor :round
 
+  private :round
+
   def initialize
     @cells = Array.new(6) { Array.new(7) { '-' } }
     @round = 1
@@ -22,23 +24,37 @@ class Board
     @cells[row][col] = symbol
   end
 
+  def display
+    puts "\nRound #{@round}: "
+    @cells.each do |row|
+      print "\n\t"
+      row.each do |s|
+        print " #{s} "
+      end
+    end
+    puts "\n\n\t 1  2  3  4  5  6  7"
+    puts
+  end
+
+  def increment_displayed_round
+    @round += 1
+  end
+
   def valid?(input)
     input.between?(1, 7) && @cells.any? { |n| n[input - 1] == '-' }
   end
 
+  def full?
+    @cells.all? { |row| row.none?('-') }
+  end
+
   def connect_vertical?(col, symbol, count = 0)
     get_col_members(col).each do |member|
-      member == symbol ? count += 1 : count = 0
+      count += 1 if member == symbol
+      count  = 0 if member != symbol
       return true if count == 4
     end
     false
-  end
-
-  # helper method for #vertical_four?
-  def get_col_members(col)
-    col_members = []
-    0.upto(5) { |row| col_members << @cells[row][col] }
-    col_members
   end
 
   def connect_horizontal?(symbol)
@@ -68,6 +84,15 @@ class Board
     false
   end
 
+  private
+
+  # helper method for #vertical_four?
+  def get_col_members(col)
+    col_members = []
+    0.upto(5) { |row| col_members << @cells[row][col] }
+    col_members
+  end
+
   # helper method for connect_diagonal?
   # sets shift according to current position on board,
   # e.g. in top left quadrant of board,
@@ -88,25 +113,5 @@ class Board
     line = []
     0.upto(3) { |n| line << @cells[row + (shift[0] * n)][col + (shift[1] * n)] }
     line.all?(symbol)
-  end
-
-  def increment_displayed_round
-    @round += 1
-  end
-
-  def full?
-    @cells.all? { |row| row.none?('-') }
-  end
-
-  def display
-    puts "\nRound #{@round}: "
-    @cells.each do |row|
-      print "\n\t"
-      row.each do |s|
-        print " #{s} "
-      end
-    end
-    puts "\n\n\t 1  2  3  4  5  6  7"
-    puts
   end
 end
