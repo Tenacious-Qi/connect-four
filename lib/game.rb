@@ -47,7 +47,7 @@ class Game
   end
 
   def player2_turn
-    @board.round += 1
+    @board.increment_displayed_round
     player2_col = request_player2_col
     loop do
       break if @board.valid?(player2_col)

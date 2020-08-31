@@ -90,6 +90,10 @@ class Board
     line.all?(symbol)
   end
 
+  def increment_displayed_round
+    @round += 1
+  end
+
   def full?
     @cells.all? { |row| row.none?('-') }
   end
