@@ -25,7 +25,7 @@ class Game
     @board.display
     until over?
       player1_turn unless @player2.winner
-      player2_turn unless over?
+      player2_turn unless @player1.winner
     end
     declare_winner
     prompt_to_play_again
